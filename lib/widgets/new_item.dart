@@ -28,7 +28,13 @@ class _NewItemState extends State<NewItem> {
                   label: Text('Name'),
                 ),
                 validator: (value) {
-                  return 'Demo...';
+                  if (value == null ||
+                      value.isEmpty ||
+                      value.trim().length <= 1 ||
+                      value.trim().length > 30) {
+                    return 'Must be 1 and 50 characters long!';
+                  }
+                  return null;
                 },
               ),
               Row(
@@ -36,7 +42,16 @@ class _NewItemState extends State<NewItem> {
                 children: [
                   Expanded(
                     child: TextFormField(
-                      decoration: InputDecoration(
+                      validator: (value) {
+                        if (value == null ||
+                            value.isEmpty ||
+                            int.tryParse(value) == null||
+                            int.tryParse(value)! <= 0) {
+                          return 'Must be a valid, positive number!';
+                        }
+                        return null;
+                      },
+                      decoration: const InputDecoration(
                         label: Text('Quantity'),
                       ),
                       initialValue: '1',
@@ -64,16 +79,24 @@ class _NewItemState extends State<NewItem> {
                             ],
                           ),
                         )
-                    ], onChanged: (value){}),
+                    ], onChanged: (value) {}),
                   ),
                 ],
               ),
-              const SizedBox(height: 16,),              Row(
+              const SizedBox(
+                height: 16,
+              ),
+              Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  TextButton(onPressed: (){}, child: const Text('Reset')),
-                  SizedBox(width: 10,),
-                  ElevatedButton(onPressed: (){}, child: const Text('Add Item'),),
+                  TextButton(onPressed: () {}, child: const Text('Reset')),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  ElevatedButton(
+                    onPressed: () {},
+                    child: const Text('Add Item'),
+                  ),
                 ],
               ),
             ],
